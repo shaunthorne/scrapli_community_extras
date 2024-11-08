@@ -1,12 +1,12 @@
-"""scrapli_community.dlink.os.dlink_os"""
+"""scrapli_community.orion.nos.orion_nos"""
 from scrapli.driver.network.base_driver import PrivilegeLevel
-from scrapli_community.dlink.os.async_driver import default_async_on_close, default_async_on_open
-from scrapli_community.dlink.os.sync_driver import default_sync_on_close, default_sync_on_open
-from scrapli.channel.base_channel import ANSI_ESCAPE_PATTERN as ANS
+from scrapli_community.orion.nos.async_driver import default_async_on_close, default_async_on_open
+from scrapli_community.orion.nos.sync_driver import default_sync_on_close, default_sync_on_open
+
 DEFAULT_PRIVILEGE_LEVELS = {
     "exec": (
         PrivilegeLevel(
-            pattern=r"^(\s{22,24})?[a-z0-9.\-_@()/:]{1,63}:(user|oper|puser|3|6)#\s*$",
+            pattern=r"^(\\n)?[a-z0-9.\-_@/:]{1,63}>\s*$",
             name="exec",
             previous_priv="",
             deescalate="",
@@ -17,22 +17,22 @@ DEFAULT_PRIVILEGE_LEVELS = {
     ),
     "privilege_exec": (
         PrivilegeLevel(
-            pattern=r"^(\s{22,24})?[a-z0-9.\-_@/:]{1,63}(:(admin|4|5))?\s*#\s*$",
+            pattern=r"^(\\n)?[a-z0-9.\-_@/:]{1,63}#\s*$",
             name="privilege_exec",
             previous_priv="exec",
             deescalate="",
-            escalate="enable admin",
+            escalate="enable",
             escalate_auth=True,
-            escalate_prompt=r"^[pP]ass[wW]ord:$",
+            escalate_prompt=r"^\s*[pP]assword:\s*$",
         )
     ),
     "configuration": (
         PrivilegeLevel(
-            pattern=r"^(\s{22,24})?[a-z0-9.\-_@/:]{1,63}:(admin|4|5)#\s*$",
+            pattern=r"^(\\n)?[a-z0-9.\-_@/:]{1,63}\(conf[a-z0-9.\-@/:\+]{0,32}\)#\s*$",
             name="configuration",
             previous_priv="privilege_exec",
-            deescalate="",
-            escalate="",
+            deescalate="end",
+            escalate="config",
             escalate_auth=False,
             escalate_prompt="",
         )
@@ -40,7 +40,7 @@ DEFAULT_PRIVILEGE_LEVELS = {
 }
 
 SCRAPLI_PLATFORM = {
-    "driver_type": "network",
+    "driver_type": "network",  # generic|network
     "defaults": {
         "privilege_levels": DEFAULT_PRIVILEGE_LEVELS,
         "default_desired_privilege_level": "privilege_exec",
@@ -48,10 +48,7 @@ SCRAPLI_PLATFORM = {
         "async_on_open": default_async_on_open,
         "sync_on_close": default_sync_on_close,
         "async_on_close": default_async_on_close,
-        "failed_when_contains": [
-            "Next possible completions:",
-            "Available commands:",
-        ],
+        "failed_when_contains": ["Syntax error:"],
         "textfsm_platform": "",
         "genie_platform": "",
     },
