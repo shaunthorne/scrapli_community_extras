@@ -44,6 +44,10 @@ SCRAPLI_PLATFORM = {
     "defaults": {
         "privilege_levels": DEFAULT_PRIVILEGE_LEVELS,
         "default_desired_privilege_level": "privilege_exec",
+        "auth_telnet_login_pattern": r"^(.*user:)|(.*login:)\s?$",
+        "auth_password_pattern": r"^Password:$",
+        "auth_secondary": "",
+        "comms_return_char": "\n\r",        
         "sync_on_open": default_sync_on_open,
         "async_on_open": default_async_on_open,
         "sync_on_close": default_sync_on_close,
@@ -51,5 +55,6 @@ SCRAPLI_PLATFORM = {
         "failed_when_contains": ["Syntax error:"],
         "textfsm_platform": "",
         "genie_platform": "",
+        "comms_return_char":"\n\r",
     },
 }
