@@ -18,7 +18,6 @@ def default_sync_on_open(conn: NetworkDriver) -> None:
     """
     conn.acquire_priv(desired_priv=conn.default_desired_privilege_level)
     conn.send_command(command="disable clipaging")
-    print('test')
 
 
 def default_sync_on_close(conn: NetworkDriver) -> None:
