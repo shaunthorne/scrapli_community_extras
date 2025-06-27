@@ -48,7 +48,7 @@ SCRAPLI_PLATFORM = {
         "async_on_open": default_async_on_open,
         "sync_on_close": default_sync_on_close,
         "async_on_close": default_async_on_close,
-        "failed_when_contains": ["Syntax error:"],
+        "failed_when_contains": ["Syntax error:", "Too many parameters", "Unknown command", "Incomplete command", "Ambiguous Command"],
         "textfsm_platform": "",
         "genie_platform": "",
     },
