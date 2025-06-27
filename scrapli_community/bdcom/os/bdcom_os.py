@@ -22,7 +22,7 @@ DEFAULT_PRIVILEGE_LEVELS = {
             previous_priv="exec",
             deescalate="",
             escalate="enable",
-            escalate_auth=True,
+            escalate_auth=False,
             escalate_prompt=r"^\s*[pP]assword:\s*$",
         )
     ),
